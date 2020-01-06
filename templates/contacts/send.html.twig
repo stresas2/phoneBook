@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="shadow pb-2">
+        {% if message %}
+            <div class="text-center p-4 h5">{{ message }}</div>
+        {% else %}
+            <table class="table text-center">
+                <thead class="thead-dark">
+                <tr>
+                    <th>Contact Name</th>
+                    <th>Contact Number</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    {% for element in data %}
+
+                        <td>
+                            {{ element.name }}
+                        </td>
+                        <td>
+                            {{ element.number }}
+                        </td>
+
+                    {% endfor %}
+                </tr>
+                </tbody>
+            </table>
+            <hr/>
+            <div class="mx-2">
+                <form action="{{ path('upload', {'id': app.request.get('id')} ) }}" method="post">
+                    <label>Please select user email:</label>
+                    <select name="email" class="form-control">
+                        {% for element in users %}
+                            <option>{{ element.email }}</option>
+                        {% endfor %}
+                    </select>
+                    <div class="row justify-content-center">
+                        <button type="submit" class="btn btn-success mt-2">Send</button>
+                    </div>
+                </form>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

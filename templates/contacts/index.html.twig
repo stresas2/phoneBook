@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Phones Book{% endblock %}
+
+{% block body %}
+    {% if list %}
+        <div class="shadow">
+            <table id="articles" class="table table-striped text-center">
+                <thead class="thead-dark">
+                <tr>
+                    <th>Contact Name</th>
+                    <th>Contact Number</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for element in list %}
+                    <tr>
+                        <td class="align-middle">
+                            {{ element.name }}
+                        </td>
+                        <td class="align-middle">
+                            {{ element.number }}
+                        </td>
+                        <td>
+                            <a class='btn btn-warning' type='button' href={{ path('edit', {'id': element.id }) }}>
+                                Edit
+                            </a>
+
+                            <a class='btn btn-danger' type='button' href={{ path('delete', {'id': element.id }) }}>
+                                Delete
+                            </a>
+                            <a type="button" class="btn btn-primary" href={{ path('send', {'id': element.id }) }}>
+                                Send Contact
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p>No articles to display</p>
+    {% endif %}
+
+{% endblock %}

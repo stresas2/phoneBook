@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="shadow mb-4">
+        <div class="p-3 text-center text-white font-weight-bold h6 m-0 bg-secondary rounded-top">
+            List of receive contacts
+        </div>
+        {% if receiveData %}
+        <table id="articles" class="table text-center">
+            <thead>
+            <tr>
+                <th>Contact Name</th>
+                <th>Contact Number</th>
+                <th>From</th>
+                <th>Actions</th>
+            </thead>
+            <tbody>
+            {% for element in receiveData %}
+                <tr>
+                    <td class="align-middle">
+                        {{ element.name }}
+                    </td>
+                    <td class="align-middle">
+                        {{ element.number }}
+                    </td>
+                    <td class="align-middle">
+                        {{ element.getFkSendingUser().getEmail() }}
+
+                    </td>
+                    <td>
+                        <a class="btn btn-primary" href={{ path('saverequest', {'id': element.id }) }}>Accept</a>
+                        <a class="btn btn-danger" href={{ path('deleterequest', {'id': element.id }) }}>Denied</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+            {% else %}
+                <p class="text-center m-0 p-2">No records</p>
+            {% endif %}
+        </table>
+    </div>
+
+    <div class="shadow">
+        <div class="p-3 text-center text-white font-weight-bold h6 m-0 bg-secondary rounded-top">
+            List of send contacts
+        </div>
+        {% if sendData %}
+        <table id="articles" class="table text-center">
+            <thead>
+            <tr>
+                <th>Contact Name</th>
+                <th>Contact Number</th>
+                <th>To</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for element in sendData %}
+                <tr>
+                    <td class="align-middle">
+                        {{ element.name }}
+                    </td>
+                    <td class="align-middle">
+                        {{ element.number }}
+                    </td>
+                    <td class="align-middle">
+                        {{ element.getFkReceivingUser().getEmail() }}
+                    </td>
+                    <td>
+                        <a class="btn btn-danger" href={{ path('deleterequest', {'id': element.id }) }}>Cancel</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+            {% else %}
+                <p class="text-center m-0 p-2">No records</p>
+            {% endif %}
+        </table>
+    </div>
+
+{% endblock %}
